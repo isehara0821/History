@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>人物 | 日本の歴史ノート</title>
+  <link rel="stylesheet" href="../history.css">
+  <script src="../history.js" defer></script>
+</head>
+<body data-history-category="person">
+  <header class="site-header">
+    <a class="brand" href="../index.html">歴史ノート</a>
+    <nav class="site-nav" aria-label="ページ">
+      <a href="index.html">日本史トップ</a>
+      <a href="war/index.html">合戦・政変</a>
+      <a href="other/index.html">用語集</a>
+    </nav>
+  </header>
+  <main class="page-wrap page-wrap-narrow">
+    <p class="eyebrow">JAPAN / PERSON</p>
+    <h1>人物</h1>
+    <p class="lead">人物情報を入力して保存すると、個別のHTMLページが作成されます。</p>
+
+    <section class="storage-panel" aria-label="保存先">
+      <div>
+        <button type="button" class="primary-button" id="choose-history-folder">人物フォルダーを選択</button>
+        <p class="storage-status" id="storage-status" role="status" aria-live="polite">C:\project\git\history\japan\person を選択してください。</p>
+      </div>
+    </section>
+
+    <details class="entry-disclosure">
+      <summary>新しい人物を登録</summary>
+      <form class="entry-form" id="history-entry-form">
+      <fieldset>
+        <legend>人物情報</legend>
+        <div class="table-scroll">
+          <table class="entry-table">
+            <tbody>
+              <tr><th><label for="field-name">名前</label></th><td><input id="field-name" data-field="name" required></td></tr>
+              <tr><th><label for="field-clan">氏</label></th><td><input id="field-clan" data-field="clan"></td></tr>
+              <tr><th><label for="field-aliases">幼名／別名</label></th><td><input id="field-aliases" data-field="aliases"></td></tr>
+              <tr><th><label for="field-life">生没年</label></th><td><input id="field-life" data-field="life"></td></tr>
+              <tr><th><label for="field-father">父</label></th><td><input id="field-father" data-field="father"></td></tr>
+              <tr><th><label for="field-mother">母</label></th><td><input id="field-mother" data-field="mother"></td></tr>
+              <tr><th><label for="field-siblings">兄弟</label></th><td><input id="field-siblings" data-field="siblings"></td></tr>
+              <tr><th><label for="field-wife">妻</label></th><td><input id="field-wife" data-field="wife"></td></tr>
+              <tr><th><label for="field-children">子</label></th><td><input id="field-children" data-field="children"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+      <div class="form-field">
+        <label for="record-one-line">一言</label>
+        <textarea id="record-one-line" data-one-line rows="2"></textarea>
+      </div>
+      <div class="form-field form-field-overview">
+        <label for="record-overview">概要</label>
+        <textarea id="record-overview" data-overview></textarea>
+        <p class="form-help">章タイトルにする行は、先頭に &lt;h&gt; を付けてください。</p>
+      </div>
+      <div class="form-field">
+        <label for="record-source">出典</label>
+        <textarea id="record-source" data-source></textarea>
+      </div>
+      <div class="file-name-row">
+        <div class="form-field">
+          <label for="record-filename">HTML名</label>
+          <input id="record-filename" data-filename required placeholder="oda_nobunaga">
+          <p class="form-help">拡張子 .html は自動で付きます。日本語、英数字、_、- が使えます。</p>
+        </div>
+        <div class="form-actions"><button type="submit" class="primary-button" id="submit-record">人物ページを作成</button></div>
+      </div>
+      </form>
+    </details>
+
+    <section class="record-panel" aria-labelledby="records-title">
+      <h2 id="records-title">人物一覧</h2>
+      <div class="record-groups" id="record-list"></div>
+      <p class="empty-records" id="empty-records">保存先を選択すると、作成済みの人物がここに表示されます。</p>
+    </section>
+  </main>
+  <footer class="site-footer">日本の歴史ノート / 人物</footer>
+</body>
+</html>

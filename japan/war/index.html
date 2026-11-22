@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>合戦・政変 | 日本の歴史ノート</title>
+  <link rel="stylesheet" href="../../history.css">
+  <script src="../../history.js" defer></script>
+</head>
+<body data-history-category="war">
+  <header class="site-header">
+    <a class="brand" href="../../index.html">歴史ノート</a>
+    <nav class="site-nav" aria-label="ページ">
+      <a href="../index.html">日本史トップ</a>
+      <a href="../person.html">人物</a>
+      <a href="../other/index.html">用語集</a>
+    </nav>
+  </header>
+  <main class="page-wrap page-wrap-narrow">
+    <p class="eyebrow">JAPAN / BATTLES & POLITICAL EVENTS</p>
+    <h1>合戦・政変</h1>
+    <p class="lead">合戦や政変の情報を入力して、個別ページとして保存できます。</p>
+
+    <section class="storage-panel" aria-label="保存先">
+      <div>
+        <button type="button" class="primary-button" id="choose-history-folder">合戦・政変フォルダーを選択</button>
+        <p class="storage-status" id="storage-status" role="status" aria-live="polite">C:\project\git\history\japan\war を選択してください。</p>
+      </div>
+    </section>
+
+    <details class="entry-disclosure">
+      <summary>新しい合戦・政変を登録</summary>
+      <form class="entry-form" id="history-entry-form">
+      <fieldset>
+        <legend>合戦・政変情報</legend>
+        <div class="table-scroll">
+          <table class="entry-table">
+            <tbody>
+              <tr><th><label for="field-name">名称</label></th><td><input id="field-name" data-field="name" required></td></tr>
+              <tr><th><label for="field-era">時代</label></th><td><input id="field-era" data-field="era"></td></tr>
+              <tr><th><label for="field-period">年代</label></th><td><input id="field-period" data-field="period"></td></tr>
+              <tr><th><label for="field-place">場所</label></th><td><input id="field-place" data-field="place"></td></tr>
+              <tr><th><label for="field-related">関係人物・勢力</label></th><td><input id="field-related" data-field="related"></td></tr>
+              <tr><th><label for="field-result">結果</label></th><td><input id="field-result" data-field="result"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+      <div class="form-field">
+        <label for="record-one-line">一言</label>
+        <textarea id="record-one-line" data-one-line rows="2"></textarea>
+      </div>
+      <div class="form-field form-field-overview">
+        <label for="record-overview">概要</label>
+        <textarea id="record-overview" data-overview></textarea>
+        <p class="form-help">章タイトルにする行は、先頭に &lt;h&gt; を付けてください。</p>
+      </div>
+      <div class="form-field">
+        <label for="record-source">出典</label>
+        <textarea id="record-source" data-source></textarea>
+      </div>
+      <div class="file-name-row">
+        <div class="form-field">
+          <label for="record-filename">HTML名</label>
+          <input id="record-filename" data-filename required placeholder="sekigahara">
+          <p class="form-help">拡張子 .html は自動で付きます。日本語、英数字、_、- が使えます。</p>
+        </div>
+        <div class="form-actions"><button type="submit" class="primary-button" id="submit-record">ページを作成</button></div>
+      </div>
+      </form>
+    </details>
+
+    <section class="record-panel" aria-labelledby="records-title">
+      <h2 id="records-title">合戦・政変一覧</h2>
+      <div class="record-groups" id="record-list"></div>
+      <p class="empty-records" id="empty-records">保存先を選択すると、作成済みの項目がここに表示されます。</p>
+    </section>
+  </main>
+  <footer class="site-footer">日本の歴史ノート / 合戦・政変</footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>用語集 | 日本の歴史ノート</title>
+  <link rel="stylesheet" href="../../history.css">
+  <script src="../../history.js" defer></script>
+</head>
+<body data-history-category="glossary">
+  <header class="site-header">
+    <a class="brand" href="../../index.html">歴史ノート</a>
+    <nav class="site-nav" aria-label="ページ">
+      <a href="../index.html">日本史トップ</a>
+      <a href="../person.html">人物</a>
+      <a href="../war/index.html">合戦・政変</a>
+    </nav>
+  </header>
+  <main class="page-wrap page-wrap-narrow">
+    <p class="eyebrow">JAPAN / GLOSSARY</p>
+    <h1>用語集</h1>
+    <p class="lead">用語の読み方や説明を入力して、個別ページとして保存できます。</p>
+
+    <section class="storage-panel" aria-label="保存先">
+      <div>
+        <button type="button" class="primary-button" id="choose-history-folder">用語集フォルダーを選択</button>
+        <p class="storage-status" id="storage-status" role="status" aria-live="polite">C:\project\git\history\japan\other を選択してください。</p>
+      </div>
+    </section>
+
+    <details class="entry-disclosure">
+      <summary>新しい用語を登録</summary>
+      <form class="entry-form" id="history-entry-form">
+      <fieldset>
+        <legend>用語情報</legend>
+        <div class="table-scroll">
+          <table class="entry-table">
+            <tbody>
+              <tr><th><label for="field-term">用語</label></th><td><input id="field-term" data-field="term" required></td></tr>
+              <tr><th><label for="field-reading">読み</label></th><td><input id="field-reading" data-field="reading"></td></tr>
+              <tr><th><label for="field-related">関連人物・出来事</label></th><td><input id="field-related" data-field="related"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+      <div class="form-field">
+        <label for="record-one-line">一言</label>
+        <textarea id="record-one-line" data-one-line rows="2"></textarea>
+      </div>
+      <div class="form-field form-field-overview">
+        <label for="record-overview">概要</label>
+        <textarea id="record-overview" data-overview></textarea>
+        <p class="form-help">章タイトルにする行は、先頭に &lt;h&gt; を付けてください。</p>
+      </div>
+      <div class="form-field">
+        <label for="record-source">出典</label>
+        <textarea id="record-source" data-source></textarea>
+      </div>
+      <div class="file-name-row">
+        <div class="form-field">
+          <label for="record-filename">HTML名</label>
+          <input id="record-filename" data-filename required placeholder="bakuhan">
+          <p class="form-help">拡張子 .html は自動で付きます。日本語、英数字、_、- が使えます。</p>
+        </div>
+        <div class="form-actions"><button type="submit" class="primary-button" id="submit-record">用語ページを作成</button></div>
+      </div>
+      </form>
+    </details>
+
+    <section class="record-panel" aria-labelledby="records-title">
+      <h2 id="records-title">用語一覧</h2>
+      <div class="record-groups" id="record-list"></div>
+      <p class="empty-records" id="empty-records">保存先を選択すると、作成済みの用語がここに表示されます。</p>
+    </section>
+  </main>
+  <footer class="site-footer">日本の歴史ノート / 用語集</footer>
+</body>
+</html>
