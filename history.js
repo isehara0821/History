@@ -5,8 +5,8 @@ const historyTemplates = {
     listHeading: "人物一覧",
     submitLabel: "人物ページを作成",
     titleField: "name",
-    recordHrefPrefix: "person/",
-    returnHref: "../person.html",
+    recordHrefPrefix: "",
+    returnHref: "index.html",
     fields: [
       { key: "name", label: "名前" },
       { key: "clan", label: "氏" },
@@ -179,16 +179,7 @@ function buildHistoryEntryHtml(template, record) {
 </html>`;
 }
 
-async function readHistoryRecords(directoryHandle, template) {
-  let manifestHandle;
-  try {
-    manifestHandle = await directoryHandle.getFileHandle(historyManifestName);
-  } catch (error) {
-    if (error.name === "NotFoundError") return [];
-    throw error;
-  }
-
-  const contents = await (await manifestHandle.getFile()).text();
+function parseHistoryRecords(contents, template) {
   if (!contents.trim()) return [];
 
   let records;
@@ -207,6 +198,27 @@ async function readHistoryRecords(directoryHandle, template) {
     throw new Error("records.jsonの形式が正しくありません。");
   }
   return records;
+}
+
+async function readPublishedHistoryRecords(template) {
+  const response = await fetch(historyManifestName);
+  if (!response.ok) {
+    throw new Error(`records.jsonを読み込めませんでした (HTTP ${response.status})。`);
+  }
+  return parseHistoryRecords(await response.text(), template);
+}
+
+async function readHistoryRecords(directoryHandle, template) {
+  let manifestHandle;
+  try {
+    manifestHandle = await directoryHandle.getFileHandle(historyManifestName);
+  } catch (error) {
+    if (error.name === "NotFoundError") return [];
+    throw error;
+  }
+
+  const contents = await (await manifestHandle.getFile()).text();
+  return parseHistoryRecords(contents, template);
 }
 
 async function writeHistoryFile(directoryHandle, name, contents) {
@@ -235,6 +247,7 @@ function setupHistoryEditor() {
   let editingFileName = null;
   let cancelEditButton = null;
   let records = [];
+  let publishedRecordsLoaded = false;
 
   function stopEditing() {
     form.reset();
@@ -286,7 +299,7 @@ function setupHistoryEditor() {
     content.className = "record-list-content";
     content.append(link, summary);
     item.append(content);
-    if (category === "person" || category === "war") {
+    if ((category === "person" || category === "war") && directoryHandle) {
       const editButton = document.createElement("button");
       editButton.type = "button";
       editButton.className = "secondary-button record-edit-button";
@@ -338,13 +351,25 @@ function setupHistoryEditor() {
     }
   }
 
-  async function connectToDirectory(selectedDirectory) {
-    const loadedRecords = await readHistoryRecords(selectedDirectory, template);
+  async function loadPublishedRecords() {
+    try {
+      records = await readPublishedHistoryRecords(template);
+      publishedRecordsLoaded = true;
+      renderRecords();
+    } catch (error) {
+      emptyRecords.hidden = false;
+      emptyRecords.textContent = `一覧を読み込めませんでした: ${error.message}`;
+    }
+  }
+
+  async function connectToDirectory(selectedDirectory, readDirectoryRecords = true) {
+    if (readDirectoryRecords) {
+      records = await readHistoryRecords(selectedDirectory, template);
+    }
     if (editingFileName !== null) stopEditing();
     directoryHandle = selectedDirectory;
     rememberedDirectoryHandle = selectedDirectory;
-    records = loadedRecords;
-    renderRecords();
+    if (readDirectoryRecords || publishedRecordsLoaded) renderRecords();
   }
 
   async function restoreRememberedDirectory() {
@@ -357,7 +382,8 @@ function setupHistoryEditor() {
 
       const permission = await rememberedDirectoryHandle.queryPermission({ mode: "readwrite" });
       if (permission === "granted") {
-        await connectToDirectory(rememberedDirectoryHandle);
+        const readDirectoryRecords = category !== "person" && category !== "war";
+        await connectToDirectory(rememberedDirectoryHandle, readDirectoryRecords);
         storageStatus.textContent = `${template.directoryName}フォルダーに自動接続しました。作成したHTMLと一覧はこのフォルダーに保存されます。`;
       } else {
         storageStatus.textContent = `前回選択した「${template.directoryName}」フォルダーを記憶しています。再接続するには保存先ボタンから同じフォルダーを選択してください。`;
@@ -472,6 +498,7 @@ function setupHistoryEditor() {
     }
   });
 
+  if (category === "person" || category === "war") loadPublishedRecords();
   restoreRememberedDirectory();
 }
 
